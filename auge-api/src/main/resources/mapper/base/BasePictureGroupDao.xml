@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.auge.modules.base.dao.BasePictureGroupDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.auge.modules.base.entity.BasePictureGroupEntity" id="basePictureGroupMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="url" column="url"/>
+        <result property="valid" column="valid"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectMaxGroupId" resultType="java.lang.Long">
+        select max(group_id) from base_picture_group
+    </select>
+
+    <select id="selectUrlsByGroupId" resultType="java.lang.String">
+        select url from base_picture_group
+        where group_id = #{groupId}
+        and valid = 1
+    </select>
+
+
+</mapper>

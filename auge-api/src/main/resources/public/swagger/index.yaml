@@ -1,0 +1,150 @@
+swagger: '2.0'
+info:
+  description: auge
+  version: 1
+  title: auge-api
+
+basePath: /auge-api
+produces:
+  - application/json
+globalOperationParameters:
+  - name: Device
+    description: 设备
+    in: header
+    type: string
+    required: true
+  - name: x-auth-token
+    description: token
+    in: query
+    type: string
+    required: false
+schemes:
+  - http
+
+#定义接口数据
+paths:
+  /login:
+    post:
+      tags:
+        - 用户登录\登出
+      summary: 用户登录
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 登录对象
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/loginDTO'
+          required: true
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              payload:
+                $ref: '#/definitions/userInfoDTO'
+              msg:
+                description: 失败原因
+                type: string
+  /logout:
+    post:
+      tags:
+        - 用户登录\登出
+      summary: 用户登出
+      produces:
+        - application/octet-stream
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              msg:
+                description: 失败原因
+                type: string
+
+  /user/register:
+    post:
+      tags:
+        - 注册
+      summary: 注册
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          description: 注册对象
+          in: body
+          type: string
+          schema:
+            $ref: '#/definitions/registerDTO'
+          required: true
+      responses:
+        '200':
+          schema:
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              msg:
+                description: 失败原因
+                type: string
+
+definitions:
+  loginDTO:
+    type: object
+    properties:
+      mobile:
+        description: 手机号
+        type: string
+      password:
+        description: 密码
+        type: string
+
+  registerDTO:
+    type: object
+    properties:
+      password:
+        description: 密码
+        type: string
+      userType:
+        description: 用户类型(1用户，2商家)
+        type: integer
+      mobile:
+        description: 手机号
+        type: string
+
+  userInfoDTO:
+    type: object
+    properties:
+      id:
+        description: id
+        type: integer
+      nickname:
+        description: 昵称
+        type: string
+      mobile:
+        description: 手机号
+        type: string
+      userType:
+        description: 用户类型(1用户，2商家)
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      token:
+        description: token
+        type: string
+      avatar:
+        description: 头像url
+        type: string
